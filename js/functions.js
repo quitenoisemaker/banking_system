@@ -27,7 +27,7 @@
 		navbar: {
 			title: 'MENU'
 		},
-		navbars: [{position:'bottom',content: ['<a href="#0">© 2019 Serviceswise </a>']}]}, 
+		navbars: [{position:'bottom',content: ['<a href="#0">© 2018 Sparker</a>']}]}, 
 		{
 		// configuration
 		clone: true,

@@ -1,5 +1,9 @@
 
+<?php
 
+include ("function/function.php");
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,16 +46,19 @@
 <body>
 	
 	<?php
-include ("function/function.php");
-session_start();
+
 if (isset($_POST['login'])) {
 	$user_email=$_POST['email'];
 	$user_pass=$_POST['pass'];
 	$status=0;
-	$sql = $conn->prepare("select * from customer where email = ? and status=?");
-	$sql->bind_param("si",$user_email,$status);
-	$sql->execute();
-	$result = $sql->get_result();
+
+	$sql = "SELECT * FROM customer where email ='".$user_email."' and status='".$status."'";
+			$result = $conn->query($sql);
+
+	// $sql = $conn->prepare("select * from customer where email = ? and status=?");
+	// $sql->bind_param("si",$user_email,$status);
+	// $sql->execute();
+	// $result = $sql->bind_result();
 
 	if($result->num_rows>0){
 		while($row=$result->fetch_assoc()){

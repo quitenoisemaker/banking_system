@@ -88,9 +88,10 @@ s0.parentNode.insertBefore(s1,s0);
         if (move_uploaded_file($tmp_name, $location.$name )){
 
           $user=$_SESSION['user_email'];
-          $sql = $conn->prepare("UPDATE customer SET profile_pic=?  WHERE email=?");
-          $sql->bind_param("ss",$name, $user);
-        if($sql->execute()) {
+         
+        $sql = "UPDATE customer SET profile_pic='$name' WHERE email='$user'";
+
+        if(mysqli_query($conn, $sql)){
           echo "<script>alert('Updated successfully')</script>";
           header('location:user_account.php');
           // echo "<script>window.open('user_account.php','_self')</script>";
@@ -204,10 +205,10 @@ s0.parentNode.insertBefore(s1,s0);
           <li class="breadcrumb-item">
           <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            
+
+          $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $fname = $row['name'];
           // $lname = $row['lastname'];
@@ -256,10 +257,8 @@ s0.parentNode.insertBefore(s1,s0);
               <div class="form-group">
                 <label>Customer fullname</label>
                 <input type="text" class="form-control" placeholder="Your company name" name="company_name" required="" value="<?php if (isset($_SESSION['user_email'])) {
-                   $sql = $conn->prepare("select * from customer where email = ?");
-                    $sql->bind_param("s",$user);
-                      $sql->execute();
-                      $result = $sql->get_result();
+                  $sql = "SELECT * FROM customer where email ='".$user."'";
+                $result = $conn->query($sql);
                       while($row=$result->fetch_assoc()){
                   $fname = $row['name'];
                   echo "$fname";
@@ -271,10 +270,8 @@ s0.parentNode.insertBefore(s1,s0);
               <div class="form-group">
                 <label>Telephone</label>
                 <input type="text" class="form-control" placeholder="Your telephone number" name="phone" required="" value="<?php if (isset($_SESSION['user_email'])) {
-                   $sql = $conn->prepare("select * from customer where email = ?");
-                    $sql->bind_param("s",$user);
-                      $sql->execute();
-                      $result = $sql->get_result();
+                   $sql = "SELECT * FROM customer where email ='".$user."'";
+                    $result = $conn->query($sql);
                       while($row=$result->fetch_assoc()){
                   $phone = $row['phone'];
                   echo "$phone";
@@ -290,10 +287,8 @@ s0.parentNode.insertBefore(s1,s0);
                <div class="form-group">
                 <label>Address</label>
                 <input type="text" class="form-control" placeholder="Your address" name="address" required="" value="<?php if (isset($_SESSION['user_email'])) {
-                   $sql = $conn->prepare("select * from customer where email = ?");
-                    $sql->bind_param("s",$user);
-                      $sql->execute();
-                      $result = $sql->get_result();
+                   $sql = "SELECT * FROM customer where email ='".$user."'";
+                    $result = $conn->query($sql);
                       while($row=$result->fetch_assoc()){
                   $address = $row['address'];
                   echo "$address";
@@ -315,10 +310,10 @@ s0.parentNode.insertBefore(s1,s0);
           $address= $_POST['address'];    
           $user=$_SESSION['user_email'];
           if (!empty($company_name) && !empty($address) && !empty($phone)) {
-          
-          $sql = $conn->prepare("UPDATE customer SET name=? , phone=? , address=?  WHERE email=?");
-          $sql->bind_param("ssss",$company_name, $phone, $address,$user);  
-          if($sql->execute()) {
+           
+          $sql = "UPDATE customer SET name='$company_name', phone='$phone', address='$address' WHERE email='$user'";
+
+          if(mysqli_query($conn, $sql)) {
           echo "<script>swal({
           title: 'Updated Successful, Thanks',
           icon: 'success',

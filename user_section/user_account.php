@@ -25,6 +25,7 @@ if (!(isset($_SESSION['user_email']))) {
   <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="lloyldbank.png">
 	
   <!-- Bootstrap core CSS-->
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Main styles -->
   <link href="css/admin.css" rel="stylesheet">
@@ -185,10 +186,9 @@ function googleTranslateElementInit() {
         <li class="breadcrumb-item">
           <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+
+          $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $fname = $row['name'];
           echo "<a><b>Welcome</b>"." ". ucwords($fname)."</a> ";
@@ -209,10 +209,8 @@ function googleTranslateElementInit() {
             <!-- showing the profile pic -->
             <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $profile_pic = $row['profile_pic'];
           
@@ -223,10 +221,8 @@ function googleTranslateElementInit() {
             <!-- showing the user name -->
              <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $fname = $row['name'];
           
@@ -238,10 +234,8 @@ function googleTranslateElementInit() {
             <!-- showing the country -->
               <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+            $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $location = $row['branch'];
           
@@ -256,10 +250,8 @@ function googleTranslateElementInit() {
            <!-- showing the country -->
               <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $address = $row['address'];
           
@@ -283,10 +275,8 @@ function googleTranslateElementInit() {
             <label><h5 class="text-primary">Current Balance</h5></label>
                <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $accountstatus = $row['accountstatus'];
           
@@ -301,10 +291,8 @@ function googleTranslateElementInit() {
             <label><h5 class="text-primary">Account Number</h5></label>
                <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+            $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $account_no = $row['account_no'];
           
@@ -317,10 +305,8 @@ function googleTranslateElementInit() {
             <label><h5 class="text-primary">Account Type</h5></label>
                <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+           $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $account = $row['account'];
           
@@ -398,6 +384,7 @@ function googleTranslateElementInit() {
       </div>
     </div>
     <!-- Bootstrap core JavaScript-->
+
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->
@@ -414,20 +401,4 @@ function googleTranslateElementInit() {
 	
 </body>
 </html>
-<?php
-if (isset($_POST['update'])) {    
-  $user=$_SESSION['user_email'];
-    $sql = $conn->prepare("UPDATE user SET company_name=? , phone=? , address=?  WHERE email=?");
-    $company_name=$_POST['company_name'];
-    $phone = $_POST['phone'];
-    $address= $_POST['address'];
-    $sql->bind_param("ssss",$company_name, $phone, $address,$user);  
-    if($sql->execute()) {
-      echo "<script>alert('Updated successfully')</script>";
-      echo "<script>window.open('user_account.php','_self')</script>";
-    } else {
-      echo "Problem in Editing Record";
-    }
-
-  }
-?>
+<!--  -->

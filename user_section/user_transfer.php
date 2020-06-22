@@ -140,10 +140,8 @@ s0.parentNode.insertBefore(s1,s0);
           <li class="breadcrumb-item">
           <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+           $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $fname = $row['name'];
         
@@ -343,6 +341,7 @@ if (isset($_SESSION['user_email'])) {
 }
 ?>
     <!-- Bootstrap core JavaScript-->
+    
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- Core plugin JavaScript-->

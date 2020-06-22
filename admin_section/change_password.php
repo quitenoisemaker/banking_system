@@ -145,9 +145,10 @@ if ($new_password != $password_again) {
   echo "<script>alert('New password do not match')</script>";
   exit();
 }else{
-  $sql = $conn->prepare("UPDATE admin SET password=?  WHERE username=?");
-  $sql->bind_param("ss",$new_password, $username);
-  if($sql->execute()) {
+  
+  	$sql = "UPDATE admin SET password='$new_password' WHERE email='$username'";
+
+  if(mysqli_query($conn, $sql)) {
       echo "<script>alert('Your password was updated successfully')</script>";
       // echo "<script>window.open('dashboard.php','_self')</script>";
       header('location:dashboard.php');

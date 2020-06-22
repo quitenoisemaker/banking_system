@@ -37,10 +37,13 @@ if(isset($_POST['submit'])){
 
 
    //check if email already exist
- 		$sql = $conn->prepare("select email from customer where email = ?");
-  		$sql->bind_param("s",$email);
-  		$sql->execute();
-  		$result = $sql->get_result();
+ 		// $sql = $conn->prepare("select email from customer where email = ?");
+  	// 	$sql->bind_param("s",$email);
+  	// 	$sql->execute();
+  	// 	$result = $sql->get_result();
+
+  		$sql = "SELECT email FROM customer where email ='".$email."'";
+			$result = $conn->query($sql);
   		if ($result->num_rows==1) {
   		echo "<script>alert('Email already exist, Thanks')</script>";
   			

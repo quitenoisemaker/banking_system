@@ -140,10 +140,9 @@ s0.parentNode.insertBefore(s1,s0);
           <li class="breadcrumb-item">
           <?php if (isset($_SESSION['user_email'])) {
             $user=$_SESSION['user_email'];
-            $sql = $conn->prepare("select * from customer where email = ?");
-            $sql->bind_param("s",$user);
-            $sql->execute();
-          $result = $sql->get_result();
+
+          $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
           while($row=$result->fetch_assoc()){
           $fname = $row['name'];
         
@@ -231,10 +230,9 @@ if (isset($_POST['submit'])) {
   $password_again=$_POST['password_again'];
   // $password_again1=password_hash($password_again, PASSWORD_DEFAULT);
 
-  $sql = $conn->prepare("select * from customer where email =?");
-  $sql->bind_param("s",$user);
-  $sql->execute();
-  $result = $sql->get_result();
+
+  $sql = "SELECT * FROM customer where email ='".$user."'";
+      $result = $conn->query($sql);
 
   if($result->num_rows>0){
 
@@ -261,9 +259,10 @@ if ($new_password != $password_again) {
         })</script>";
   exit();
 }else{
-  $sql = $conn->prepare("UPDATE customer SET password=?  WHERE email=?");
-  $sql->bind_param("ss",$new_password, $user);
-  if($sql->execute()) {
+  
+  $sql = "UPDATE customer SET password='$new_password' WHERE email='$user'";
+
+  if(mysqli_query($conn, $sql)) {
 
       echo "<script>swal({
           title: 'Your password was updated successfully',
@@ -271,7 +270,7 @@ if ($new_password != $password_again) {
           button: 'Ok!',
         })</script>";
       // echo "<script>window.open('user_account.php','_self')</script>";
-      header('location:user_account.php');
+      
 
     } 
 }

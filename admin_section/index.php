@@ -5,10 +5,13 @@ if (isset($_POST['login'])) {
 	$username=$_POST['username'];
 	$password=$_POST['password'];
 
-	$sql = $conn->prepare("select * from admin where username = ?");
-	$sql->bind_param("s",$username);
-	$sql->execute();
-	$result = $sql->get_result();
+	// $sql = $conn->prepare("select * from admin where username = ?");
+	// $sql->bind_param("s",$username);
+	// $sql->execute();
+	// $result = $sql->get_result();
+
+	$sql = "SELECT * FROM admin where username ='".$username."'";
+			$result = $conn->query($sql);
 
 	if($result->num_rows>0){
 	while($row=$result->fetch_assoc()){
